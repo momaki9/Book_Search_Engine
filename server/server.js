@@ -8,7 +8,7 @@ const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
 //TODO: is line below needed?
-const routes = require('./routes');
+// const routes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 //TODO: is line below needed?
-app.use(routes);
+// app.use(routes);
 
 const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();

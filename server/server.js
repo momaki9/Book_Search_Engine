@@ -1,14 +1,9 @@
 const express = require('express');
-//TODO: add dependency
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 
-//TODO: add code in schemas folder
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-
-//TODO: is line below needed?
-// const routes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -29,9 +24,6 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-//TODO: is line below needed?
-// app.use(routes);
-
 const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({ app });
@@ -46,3 +38,4 @@ const startApolloServer = async (typeDefs, resolvers) => {
 };
 
 startApolloServer(typeDefs, resolvers);
+

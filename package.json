@@ -5,12 +5,14 @@
     "main": "server/server.js",
     "scripts": {
       "start": "node server/server.js --ignore client",
+      "start:prod": "cd server && npm start",
       "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
       "install": "cd server && npm i && cd ../client && npm i",
       "build": "cd client && npm run build"
     },
     "dependencies": {
-      "@apollo/client": "3.5.8"
+      "@apollo/client": "3.5.8",
+      "if-env": "1.0.4"
     },
     "keywords": [],
     "author": "",

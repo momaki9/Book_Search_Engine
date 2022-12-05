@@ -9,6 +9,9 @@
       "install": "cd server && npm i && cd ../client && npm i",
       "build": "cd client && npm run build"
     },
+    "dependencies": {
+      "@apollo/client": "3.5.8"
+    },
     "keywords": [],
     "author": "",
     "license": "ISC",

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "cd server && npm i && npm start",
-    "start:dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "start:dev": "concurrently \"cd server && npm run watch\" \"cd client && npm i && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
@@ -16,6 +16,10 @@
   "dependencies": {
     "apollo-server-express": "^2.21.0",
     "if-env": "^1.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@work.github.com:momaki9/Book_Search_Engine.git"
   },
   "devDependencies": {
     "concurrently": "^5.3.0"

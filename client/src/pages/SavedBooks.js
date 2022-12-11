@@ -1,22 +1,16 @@
 import React from 'react';
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { GET_ME } from "../utils/queries";
+import { REMOVE_BOOK } from "../utils/mutations";
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
-
 import Auth from '../utils/auth';
-import { saveBookIds, removeBookId } from '../utils/localStorage';
-
-import { useMutation, useQuery } from '@apollo/client';
-import { GET_ME } from '../utils/queries';
-import { REMOVE_BOOK } from '../utils/mutations';
+import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-
   const { loading, data } = useQuery(GET_ME);
-
   const userData = data?.me || [];
-
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -25,26 +19,20 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await removeBook({ variables: { bookId: bookId }});
-
-      if (!response) {
-        throw new Error('something went wrong!');
-      }
+      await removeBook({
+        variables: { bookId },
+      });
       removeBookId(bookId);
-
+      window.location.reload();
     } catch (err) {
-      console.error(error);
+      console.error(err);
     }
   };
 
-  // if data isn't here yet, say so
   if (loading) {
-    return <h2>LOADING...</h2>;
+    return <div>Loading...</div>;
   }
-
-  const savedBookIds = userData.savedBooks.map((book) => book.bookId);
-  saveBookIds(savedBookIds);
-
+  
   return (
     <>
       <Jumbotron fluid className='text-light bg-dark'>
@@ -66,11 +54,13 @@ const SavedBooks = () => {
                 <Card.Body>
                   <Card.Title>{book.title}</Card.Title>
                   <p className='small'>Authors: {book.authors}</p>
+                  {book.link ? <p className='small'><a href={book.link} target="_blank" rel="noopener noreferrer">Link: {book.link}</a></p> : <p className='small'>No link to Google Books found.</p>}
                   <Card.Text>{book.description}</Card.Text>
                   <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
                     Delete this Book!
                   </Button>
                 </Card.Body>
+                {error && <div> Something went wrong...</div>}
               </Card>
             );
           })}

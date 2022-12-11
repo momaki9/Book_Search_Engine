@@ -1,24 +1,23 @@
 {
-    "name": "book-search-engine",
+    "name": "googlebooks-app",
     "version": "1.0.0",
     "description": "",
     "main": "server/server.js",
     "scripts": {
-      "start": "node server/server.js --ignore client",
+      "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
       "start:prod": "cd server && npm start",
-      "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+      "start:dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
       "install": "cd server && npm i && cd ../client && npm i",
-      "build": "cd client && npm run build"
+      "heroku-postbuild": "cd client && npm run build"
     },
-    "dependencies": {
-      "@apollo/client": "3.5.8",
-      "if-env": "1.0.4"
-    },
-    "keywords": [],
     "author": "",
     "license": "ISC",
+    "dependencies": {
+      "apollo-server-express": "^2.21.0",
+      "if-env": "^1.0.4"
+    },
     "devDependencies": {
-      "concurrently": "^5.1.0"
+      "concurrently": "^5.3.0"
     }
   }
   
